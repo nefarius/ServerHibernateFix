@@ -10,6 +10,6 @@ Dependencies
 
 Installation
 ------------
-* Downloade `shf.smx` from [here](releases) and move it to your `addons/sourcemod/plugins` directory
+* Downloade `shf.smx` from [here](https://github.com/nefarius/ServerHibernateFix/releases/latest) and move it to your `addons/sourcemod/plugins` directory
 * Execute `sm plugins load shf` on your server console
 * Adjust `cfg/sourcemod/shf.cfg` to your needs
