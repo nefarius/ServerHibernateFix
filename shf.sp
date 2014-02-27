@@ -19,7 +19,7 @@ public Plugin:myinfo =
 	author = "Nefarius",
 	description = "Switches to defined map if server is empty",
 	version = PLUGIN_VERSION,
-	url = "http://nefarius.at/"
+	url = "https://github.com/nefarius/ServerHibernateFix"
 }
 
 public OnPluginStart()
