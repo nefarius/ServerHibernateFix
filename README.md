@@ -13,3 +13,26 @@ Installation
 * Downloade `shf.smx` from [here](https://github.com/nefarius/ServerHibernateFix/releases/latest) and move it to your `addons/sourcemod/plugins` directory
 * Execute `sm plugins load shf` on your server console
 * Adjust `cfg/sourcemod/shf.cfg` to your needs
+
+Cvars
+-----
+```
+// Defines the default map to fall back to before server hibernates
+// -
+// Default: "de_dust"
+sm_shf_default_map "de_dust"
+
+// Enables or disables plugin functionality <1 = Enabled/Default, 0 = Disabled>
+// -
+// Default: "1"
+// Minimum: "0.000000"
+// Maximum: "1.000000"
+sm_shf_enabled "1"
+
+// Trigger action if clients are <1 = Ingame, 0 = Connected/Default>
+// -
+// Default: "0"
+// Minimum: "0.000000"
+// Maximum: "1.000000"
+sm_shf_ingame_clients_only "0"
+```
