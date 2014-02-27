@@ -2,7 +2,7 @@
 #include <sourcemod>
 #include <regex>
 
-#define PLUGIN_VERSION	"0.0.1"
+#define PLUGIN_VERSION	"0.0.2"
 #define ERR_INVALID_MAP	"Setting a workshop map (%s) as default map won't work, \
 							please set a regular one like 'de_dust'"
 
@@ -54,7 +54,8 @@ public OnPluginEnd()
 
 public OnMapStart()
 {
-	SetConVarInt(g_cvarHibernateDelay, 10);
+	if (g_cvarHibernateDelay != INVALID_HANDLE)
+		SetConVarInt(g_cvarHibernateDelay, 10);
 }
 
 public OnClientDisconnect_Post(client)
@@ -68,9 +69,7 @@ public OnClientDisconnect_Post(client)
 		GetConVarString(g_cvarFallbackMap, map, sizeof(map));
 		
 		if (MatchRegex(g_RegexWorkshopMap, map) > 0)
-		{
 			SetFailState(ERR_INVALID_MAP, map);
-		}
 		
 		LogMessage("Server is empty, changing map to '%s'", map);
 		if (IsMapValid(map))
