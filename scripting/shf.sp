@@ -74,7 +74,7 @@ public OnMapStart()
 
 public Action:Event_PlayerDisconnect(Handle:event, const String:name[], bool:dontBroadcast)
 {
-	// Delay player count action to prevent race condition
+	// Delay fallback action to prevent race condition
 	CreateTimer(2.0, Timer_ClientDisconnected);
 	
 	return Plugin_Continue;
@@ -92,6 +92,13 @@ public Action:Timer_ClientDisconnected(Handle:timer)
 		// Get fallback map name
 		decl String:map[PLATFORM_MAX_PATH];
 		GetConVarString(g_cvarFallbackMap, map, sizeof(map));
+		
+		decl String:map_current[PLATFORM_MAX_PATH];
+		GetCurrentMap(map_current, sizeof(map_current));
+		
+		// Don't switch if current map is fallback map
+		if (StrEqual(map_current, map, false))
+			return Plugin_Continue;
 		
 		// Validate that it's not a workshop map
 		if (MatchRegex(g_RegexWorkshopMap, map) > 0)
