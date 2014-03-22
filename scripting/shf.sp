@@ -2,7 +2,7 @@
 #include <sourcemod>
 #include <regex>
 
-#define PLUGIN_VERSION	"0.0.3"
+#define PLUGIN_VERSION	"0.0.4"
 #define ERR_INVALID_MAP	"Setting a workshop map (%s) as default map won't work, \
 							please set a regular one like 'de_dust'"
 
@@ -52,7 +52,7 @@ public OnPluginStart()
 		SetFailState("'sv_hibernate_postgame_delay' not found! Is this CS:GO?");
 	
 	// Get real player disconnect event
-	HookEvent("player_disconnect", Event_PlayerDisconnect, EventHookMode_PostNoCopy);
+	HookEvent("player_disconnect", Event_PlayerDisconnect, EventHookMode_Post);
 	
 	// Load configuration file
 	AutoExecConfig(true, "shf");
@@ -69,13 +69,17 @@ public OnMapStart()
 {
 	// Set hibernation delay high enough for the plugin to handle events
 	if (g_cvarHibernateDelay != INVALID_HANDLE)
-		SetConVarInt(g_cvarHibernateDelay, 10);
+		SetConVarInt(g_cvarHibernateDelay, 30);
 }
 
 public Action:Event_PlayerDisconnect(Handle:event, const String:name[], bool:dontBroadcast)
 {
+	// If a bot triggered this event, ignore
+	if (GetEventBool(event, "bot"))
+		return Plugin_Continue;
+	
 	// Delay fallback action to prevent race condition
-	CreateTimer(2.0, Timer_ClientDisconnected);
+	CreateTimer(GetRandomFloat(2.0, 10.0), Timer_ClientDisconnected);
 	
 	return Plugin_Continue;
 }
