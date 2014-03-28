@@ -36,15 +36,24 @@ public OnPluginStart()
 	g_cvarEnabled = CreateConVar("sm_shf_enabled", "1", 
 		"Enables or disables plugin functionality <1 = Enabled/Default, 0 = Disabled>", 
 		0, true, 0.0, true, 1.0);
+	if (g_cvarEnabled == INVALID_HANDLE)
+		LogError("Couldn't register 'sm_shf_enabled'!");
 	// Set the map to fall back to
 	g_cvarFallbackMap = CreateConVar("sm_shf_default_map", "de_dust",
 		"Defines the default map to fall back to before server hibernates");
-	// Monitor Cvar change to filter user input
-	HookConVarChange(g_cvarFallbackMap, OnConvarChanged);
+	if (g_cvarFallbackMap == INVALID_HANDLE)
+		LogError("Couldn't register 'sm_shf_default_map'!");
+	else
+	{
+		// Monitor Cvar change to filter user input
+		HookConVarChange(g_cvarFallbackMap, OnConvarChanged);
+	}
 	// Let's the user decide if only in-game clients count as connected players
 	g_cvarIngameOnly = CreateConVar("sm_shf_ingame_clients_only", "0", 
 		"Trigger action if clients are <1 = Ingame, 0 = Connected/Default>", 
 		0, true, 0.0, true, 1.0);
+	if (g_cvarIngameOnly == INVALID_HANDLE)
+		LogError("Couldn't register 'sm_shf_ingame_clients_only'!");
 	
 	// Get hibernate delay Cvar
 	g_cvarHibernateDelay = FindConVar("sv_hibernate_postgame_delay");
